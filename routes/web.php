@@ -22,5 +22,25 @@ $router->get('/', function () {
     ], 200);
 });
 
-$router->post('register', ['uses' => 'AuthController@register']);
-$router->get('activate/{token}', ['uses' => 'AuthController@activate']);
+/*
+ * Role routes
+ */
+$router->get('roles', [
+    'uses' => 'RoleController@index'
+]);
+
+$router->post('role', [
+    'uses' => 'RoleController@store'
+]);
+
+$router->get('role/{id:[0-9]+}', [
+    'uses' => 'RoleController@show'
+]);
+
+$router->put('role/{id:[0-9]+}', [
+    'uses' => 'RoleController@update'
+]);
+
+$router->delete('role/{id:[0-9]+}', [
+    'uses' => 'RoleController@destroy'
+]);
