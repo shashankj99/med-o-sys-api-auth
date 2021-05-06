@@ -2,38 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\RoleService;
+use App\Services\PermissionService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class RoleController extends Controller
+class PermissionController extends Controller
 {
     /**
-     * @var RoleService
+     * @var PermissionService
      */
-    protected $roleService;
+    protected $permissionService;
 
     /**
-     * RoleController constructor.
-     * @param RoleService $roleService
+     * PermissionController constructor.
+     * @param PermissionService $permissionService
      */
-    public function __construct(RoleService $roleService)
+    public function __construct(PermissionService $permissionService)
     {
-        $this->roleService = $roleService;
+        $this->permissionService = $permissionService;
     }
 
     /**
-     * Method to get all the roles
+     * Method to get all the permissions
      * @param Request $request
      * @return LengthAwarePaginator|JsonResponse
      */
     public function index(Request $request)
     {
         try {
-            return $this->roleService->getAllRoles($request);
+            return $this->permissionService->getAllPermissions($request);
         } catch (\Exception $exception) {
             return response()->json([
                 'status' => 500,
@@ -43,7 +43,7 @@ class RoleController extends Controller
     }
 
     /**
-     * Method to create a role
+     * Method to create a new permission
      * @param Request $request
      * @return JsonResponse
      */
@@ -51,18 +51,18 @@ class RoleController extends Controller
     {
         try {
             $this->validate($request, [
-                'name' => 'required|string|unique:roles'
+                'name' => 'required|string|unique:permissions'
             ], [
                 'name.required' => 'The name field is required',
                 'name.string' => 'The name must be a string',
                 'name.unique' => 'This name has already been taken'
             ]);
 
-            $this->roleService->createRole($request);
+            $this->permissionService->createPermission($request);
 
             return response()->json([
                 'status' => 200,
-                'message' => 'Role created successfully'
+                'message' => 'Permission created successfully'
             ], 200);
         } catch (ValidationException $exception) {
             return response()->json([
@@ -78,18 +78,18 @@ class RoleController extends Controller
     }
 
     /**
-     * Method to get the details of a role
+     * Method to find the permission detail
      * @param $id
      * @return JsonResponse
      */
     public function show($id)
     {
         try {
-            $role = $this->roleService->getRole($id);
+            $permission = $this->permissionService->getPermission($id);
 
             return response()->json([
                 'status' => 200,
-                'data' => $role
+                'data' => $permission
             ], 200);
         } catch (ModelNotFoundException $exception) {
             return response()->json([
@@ -105,7 +105,7 @@ class RoleController extends Controller
     }
 
     /**
-     * Method to update the role
+     * Method to update the permission
      * @param $id
      * @param Request $request
      * @return JsonResponse
@@ -114,18 +114,18 @@ class RoleController extends Controller
     {
         try {
             $this->validate($request, [
-                'name' => 'required|string|unique:roles,name,' . $id
+                'name' => 'required|string|unique:permissions,name,' . $id
             ], [
                 'name.required' => 'The name field is required',
                 'name.string' => 'The name must be a string',
                 'name.unique' => 'This name has already been taken'
             ]);
 
-            $this->roleService->updateRole($id, $request);
+            $this->permissionService->updatePermission($id, $request);
 
             return response()->json([
                 'status' => 200,
-                'message' => 'Role updated successfully'
+                'message' => 'Permission updated successfully'
             ], 200);
         } catch (ValidationException $exception) {
             return response()->json([
@@ -146,18 +146,18 @@ class RoleController extends Controller
     }
 
     /**
-     * Method to delete the role
+     * Method to delete the permission
      * @param $id
      * @return JsonResponse
      */
     public function destroy($id)
     {
         try {
-            $this->roleService->deleteRole($id);
+            $this->permissionService->deletePermission($id);
 
             return response()->json([
                 'status' => 200,
-                'message' => 'Role deleted successfully'
+                'message' => 'Permission deleted successfully'
             ], 200);
         } catch (ModelNotFoundException $exception) {
             return response()->json([

@@ -1,19 +1,8 @@
 <?php
 
-/** @var Router $router */
-
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It is a breeze. Simply tell Lumen the URIs it should respond to
-| and give it the Closure to call when that URI is requested.
-|
-*/
-
 use Laravel\Lumen\Routing\Router;
+
+/** @var Router $router */
 
 $router->get('/', function () {
     return response()->json([
@@ -22,9 +11,9 @@ $router->get('/', function () {
     ], 200);
 });
 
-/*
+/* ******************************************
  * Role routes
- */
+ * ******************************************/
 $router->get('roles', [
     'uses' => 'RoleController@index'
 ]);
@@ -43,4 +32,27 @@ $router->put('role/{id:[0-9]+}', [
 
 $router->delete('role/{id:[0-9]+}', [
     'uses' => 'RoleController@destroy'
+]);
+
+/* ******************************************
+ * Permission Routes
+ * ******************************************/
+$router->get('permissions', [
+    'uses' => 'PermissionController@index'
+]);
+
+$router->post('permission', [
+    'uses' => 'PermissionController@store'
+]);
+
+$router->get('permission/{id:[0-9]+}', [
+    'uses' => 'PermissionController@show'
+]);
+
+$router->put('permission/{id:[0-9]+}', [
+    'uses' => 'PermissionController@update'
+]);
+
+$router->delete('permission/{id:[0-9]+}', [
+    'uses' => 'PermissionController@destroy'
 ]);
