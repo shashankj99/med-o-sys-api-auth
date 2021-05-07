@@ -1,8 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\URL;
 use Laravel\Lumen\Routing\Router;
 
 /** @var Router $router */
+
+if (env('APP_ENV') == 'production')
+    URL::forceScheme('https');
 
 $router->get('/', function () {
     return response()->json([
