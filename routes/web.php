@@ -90,3 +90,28 @@ $router->put('province/{id:[0-9]+}', [
 $router->delete('province/{id:[0-9]+}', [
     'uses' => 'ProvinceController@destroy'
 ]);
+
+/* ******************************************
+ * District Routes
+ * ******************************************/
+$router->get('districts', [
+    'uses' => 'DistrictController@index'
+]);
+
+$router->group(['prefix' => 'province/{provinceId:[0-9]+}'], function () use ($router) {
+    $router->post('district', [
+        'uses' => 'DistrictController@store'
+    ]);
+
+    $router->get('district/{id:[0-9]+}', [
+        'uses' => 'DistrictController@show'
+    ]);
+
+    $router->put('district/{id:[0-9]+}', [
+        'uses' => 'DistrictController@update'
+    ]);
+
+    $router->delete('district/{id:[0-9]+}', [
+        'uses' => 'DistrictController@destroy'
+    ]);
+});
