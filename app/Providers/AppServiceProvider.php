@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        Schema::defaultStringLength(191);
+
         Builder::macro('whereLike', function($attributes, $searchTerm) {
             $this->where(function (Builder $query) use ($attributes, $searchTerm) {
                 foreach ($attributes as $attribute)
