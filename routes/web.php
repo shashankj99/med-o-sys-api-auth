@@ -56,3 +56,14 @@ $router->put('permission/{id:[0-9]+}', [
 $router->delete('permission/{id:[0-9]+}', [
     'uses' => 'PermissionController@destroy'
 ]);
+
+/* ******************************************
+ * Role & Permission assignment Routes
+ * ******************************************/
+$router->post('assign-permissions-to-role', [
+    'uses' => 'AssignRoleAndPermissionController@assignPermissionsToRole'
+]);
+
+$router->post('assign-roles-to-permission', [
+    'uses' => 'AssignRoleAndPermissionController@assignRolesToPermission'
+]);

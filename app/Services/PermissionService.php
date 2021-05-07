@@ -49,7 +49,7 @@ class PermissionService
      */
     public function createPermission($request)
     {
-        $this->permission->create(['name' => $request->name]);
+        $this->permission->create(['name' => strtolower($request->name)]);
     }
 
     /**

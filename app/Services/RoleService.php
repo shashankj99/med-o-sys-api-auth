@@ -49,7 +49,7 @@ class RoleService
      */
     public function createRole($request)
     {
-        $this->role->create(['name' => $request->name]);
+        $this->role->create(['name' => strtolower($request->name)]);
     }
 
     /**
