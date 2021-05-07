@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Province extends Model
 {
-    protected $fillable = ['name', 'slug'];
+    protected $fillable = ['name', 'slug', 'nep_name'];
 }

@@ -67,3 +67,26 @@ $router->post('assign-permissions-to-role', [
 $router->post('assign-roles-to-permission', [
     'uses' => 'AssignRoleAndPermissionController@assignRolesToPermission'
 ]);
+
+/* ******************************************
+ * Province Routes
+ * ******************************************/
+$router->get('provinces', [
+    'uses' => 'ProvinceController@index'
+]);
+
+$router->post('province', [
+    'uses' => 'ProvinceController@store'
+]);
+
+$router->get('province/{id:[0-9]+}', [
+    'uses' => 'ProvinceController@show'
+]);
+
+$router->put('province/{id:[0-9]+}', [
+    'uses' => 'ProvinceController@update'
+]);
+
+$router->delete('province/{id:[0-9]+}', [
+    'uses' => 'ProvinceController@destroy'
+]);
