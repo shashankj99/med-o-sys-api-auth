@@ -115,3 +115,28 @@ $router->group(['prefix' => 'province/{provinceId:[0-9]+}'], function () use ($r
         'uses' => 'DistrictController@destroy'
     ]);
 });
+
+/* ******************************************
+ * City Routes
+ * ******************************************/
+$router->get('cities', [
+    'uses' => 'CityController@index'
+]);
+
+$router->group(['prefix' => 'district/{districtId:[0-9]+}'], function () use ($router) {
+    $router->post('city', [
+        'uses' => 'CityController@store'
+    ]);
+
+    $router->get('city/{id:[0-9]+}', [
+        'uses' => 'CityController@show'
+    ]);
+
+    $router->put('city/{id:[0-9]+}', [
+        'uses' => 'CityController@update'
+    ]);
+
+    $router->delete('city/{id:[0-9]+}', [
+        'uses' => 'CityController@destroy'
+    ]);
+});
