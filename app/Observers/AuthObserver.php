@@ -12,14 +12,14 @@ use App\Models\User;
  */
 class AuthObserver
 {
-    public $afterCommit = true;
+//    public $afterCommit = true;
 
     /**
      * Method to dispatch send activation mail job
      * @param User $user
      */
-    public function created(User $user)
-    {
-        dispatch(new SendActivationMailJob($user));
-    }
+//    public function created(User $user)
+//    {
+//        dispatch(new SendActivationMailJob($user));
+//    }
 }

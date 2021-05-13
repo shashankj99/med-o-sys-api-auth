@@ -18,7 +18,7 @@ class RegisterRequest extends BaseRequest
             'mobile' => 'required|numeric|digits:10',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|confirmed',
-            'age' => 'required|numeric|min:1',
+            'age' => 'required|numeric|min:1|max:125',
             'blood_group' => 'required|string|in:A+,A-,B+,B-,AB+,AB-,O+,O-',
             'role_id' => 'sometimes|numeric|min:1'
         ];
@@ -52,6 +52,7 @@ class RegisterRequest extends BaseRequest
             'age.required' => 'Age is required',
             'age.numeric' => 'Age must be a number',
             'age.min' => 'Age can not be less than 1',
+            'age.max' => 'Age can not be more than 125',
             'blood_group.required' => 'Blood group is required',
             'blood_group.in' => 'Blood group must be of valid type',
         ];

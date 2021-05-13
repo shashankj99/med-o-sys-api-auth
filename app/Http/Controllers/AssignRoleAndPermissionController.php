@@ -110,4 +110,41 @@ class AssignRoleAndPermissionController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Method to assign roles to a user
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function assignRolesToUser(Request $request)
+    {
+        try {
+            $this->validate($request, [
+                'user_id' => 'required|min:1',
+                'roles' => 'required|array'
+            ], $this->validationMessages());
+
+            $this->assignRoleAndPermissionService->assignRolesToUser($request);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Roles were successfully assigned to the user'
+            ], 200);
+        } catch (ValidationException $exception) {
+            return response()->json([
+                'status' => 422,
+                'errors' => $exception->errors()
+            ], 422);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json([
+                'status' => 404,
+                'message' => $exception->getMessage()
+            ], 404);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'status' => 500,
+                'message' => $exception->getMessage()
+            ], 500);
+        }
+    }
 }

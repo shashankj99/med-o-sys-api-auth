@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTokensTable extends Migration
+class CreateOtpsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class CreateTokensTable extends Migration
      */
     public function up()
     {
-        Schema::create('tokens', function (Blueprint $table) {
+        Schema::create('otps', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->text('token');
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onDelete('cascade');
+            $table->integer('otp')
+                ->unsigned();
+            $table->enum('type', ['activate', 'reset']);
             $table->timestamps();
         });
     }
@@ -28,6 +32,6 @@ class CreateTokensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tokens');
+        Schema::dropIfExists('otps');
     }
 }

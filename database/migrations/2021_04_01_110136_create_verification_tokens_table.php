@@ -20,7 +20,7 @@ class CreateVerificationTokensTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
 
-            $table->string('token');
+            $table->text('token');
 
             $table->enum('type', ['activate', 'reset']);
 

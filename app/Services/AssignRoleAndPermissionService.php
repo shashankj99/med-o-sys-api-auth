@@ -75,4 +75,20 @@ class AssignRoleAndPermissionService
         // attach roles to permission
         $permission->syncRoles($roles);
     }
+
+    /**
+     * Method to assign roles to the user
+     * @param $request
+     */
+    public function assignRolesToUser($request)
+    {
+        // fetch the user by user id
+        $user = $this->user->find($request->user_id);
+
+        // check if the user exists
+        if (!$user)
+            throw new ModelNotFoundException('Unable to find the user');
+
+        $user->syncRoles([$request->roles]);
+    }
 }

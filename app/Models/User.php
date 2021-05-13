@@ -28,7 +28,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     protected $fillable = [
         'first_name', 'middle_name', 'last_name', 'nep_name', 'province', 'district', 'city', 'ward_no', 'dob_ad',
-        'dob_bs', 'mobile', 'email', 'password', 'age', 'blood_group', 'img', 'is_verified', 'is_active', 'role_id'
+        'dob_bs', 'mobile', 'email', 'password', 'age', 'blood_group', 'img', 'mobile_verification', 'email_verification',
+        'status'
     ];
 
     /**
@@ -40,31 +41,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password',
     ];
 
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     * @return mixed
-     */
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     * @return array
-     */
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
-
-    /**
-     * @return HasOne
-     */
-    public function token()
-    {
-        return $this->hasOne(Token::class);
-    }
+    // guard name
+    protected $guard_name = 'api';
 
     /**
      * Method to hash a password
@@ -124,10 +102,44 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
     /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function token()
+    {
+        return $this->hasOne(Token::class);
+    }
+
+    /**
      * @return HasOne
      */
     public function verificationToken()
     {
         return $this->hasOne(VerificationToken::class);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function otp()
+    {
+        return $this->hasOne(Otp::class);
     }
 }

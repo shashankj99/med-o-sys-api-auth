@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ActivationMail extends Mailable
+class ResetPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,13 +19,13 @@ class ActivationMail extends Mailable
 
     public function build()
     {
-        // get the activation token
+        // get the reset token
         $token = $this->user->verificationToken()
-            ->where('type', 'activate')
+            ->where('type', 'reset')
             ->first();
 
-        return $this->subject('Activate Your Account')
-            ->view('activation_mail')
+        return $this->subject('Reset Your Password')
+            ->view('reset_password')
             ->with(['token' => $token]);
     }
 }

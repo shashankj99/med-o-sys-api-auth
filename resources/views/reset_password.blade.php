@@ -321,7 +321,7 @@
                         <div class="serif h1" style="font-size: 32px; line-height: 100%; margin-bottom: 25px;">Welcome
                             to Med-O-Sys
                         </div>
-                        <div class="serif" style="font-size: 18px; line-height: 100%; margin: 0 0 30px 0;">Click on the button below to activate your account
+                        <div class="serif" style="font-size: 18px; line-height: 100%; margin: 0 0 30px 0;">Click on the button below to reset your password
                         </div>
                         <div class="spacer" style="line-height: 50px;">&nbsp;</div>
                     </th>
@@ -342,18 +342,14 @@
                             Hello {{ $user->first_name }},
                         </div>
                         <div class="sans-serif"
-                             style="color: #000000; font-size: 18px; line-height: 28px; margin-bottom: 40px;">We wish
-                            you a good fortune.<br>
-                        </div>
-                        <div class="sans-serif"
-                             style="color: #000000; font-size: 18px; line-height: 28px; margin-bottom: 40px;">We at Med-O-Sys design the system to solve all the problems related to the health sector of the country and promise to bring a digital revolution in this sector.
+                             style="color: #000000; font-size: 18px; line-height: 28px; margin-bottom: 40px;">You requested to change your password. We've sent you an email with the link to reset your password. Please click on the button below to reset your password
                         </div>
                         <table class="mobile-text-center" bgcolor="#043b86" cellpadding="0" cellspacing="0"
                                style="border-radius: 3px;" role="presentation">
                             <tr>
                                 <th class="sans-serif">
-                                    <a href="{{ env('APP_URL') . '/activate/' . $token->token }}"
-                                       style="border: 0 solid #043b86; color: #FFFFFF; display: inline-block; font-size: 14px; font-weight: 400; padding: 15px 50px 15px 50px; text-decoration: none;">Activate your account</a>
+                                    <a href="{{ env('APP_URL') . '/reset/' . $token->token }}"
+                                       style="border: 0 solid #043b86; color: #FFFFFF; display: inline-block; font-size: 14px; font-weight: 400; padding: 15px 50px 15px 50px; text-decoration: none;">Reset your password</a>
                                 </th>
                             </tr>
                         </table>
