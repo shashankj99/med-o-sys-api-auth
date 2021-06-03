@@ -7,6 +7,8 @@ use App\Jobs\SendActivationMailJob;
 use App\Models\Otp;
 use App\Models\User;
 use App\Models\VerificationToken;
+use App\Traits\GetUserAge;
+use App\Traits\GetUserImage;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
@@ -16,6 +18,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthService
 {
+    use GetUserAge, GetUserImage;
+
     /**
      * @var User
      */
@@ -37,25 +41,7 @@ class AuthService
      */
     public function register($request)
     {
-        // make carbon object from dob
-        $dateOfBirth = Carbon::parse($request->dob_ad);
-
-        // get today date
-        $todayDate = Carbon::now();
-
-        // get date difference in years
-        $years = $dateOfBirth->diffInYears($todayDate);
-
-        // set age parameter
-        $age = ($request->age < $years || $request->age > $years)
-            ? $years
-            : $request->age;
-
-        // throw error if age exceeds 125 if fails to pass validation
-        if ($age > 125)
-            throw ValidationException::withMessages([
-                'age' => 'Age cannot be more than 125 years'
-            ]);
+        $age = $this->getUserAge($request);
 
         // create user
         $user = $this->user->create([
@@ -74,7 +60,7 @@ class AuthService
             'password' => $request->password,
             'age' => $age,
             'blood_group' => $request->blood_group,
-            'img' => $this->getImageName($request->file('img'), $request->mobile)
+            'img' => $this->getImageName($request->img, $request->mobile)
         ]);
 
         // generate otp if user is created successfully
@@ -266,29 +252,6 @@ class AuthService
         // change the password
         $user->password = $request->password;
         $user->save();
-    }
-
-    /**
-     * Method to store image and get name
-     * @param $image
-     * @param $mobile
-     * @return string
-     */
-    private function getImageName($image, $mobile)
-    {
-        // check if request has image
-        if ($image) {
-            // create image name by mobile number
-            $imageName = $mobile . $image->getClientOriginalExtension();
-
-            // move image to public/images/avatars folder
-            $image->move('images/avatars', $imageName);
-
-            return $imageName;
-        } else {
-            // set image name as default
-            return 'default.png';
-        }
     }
 
     /**

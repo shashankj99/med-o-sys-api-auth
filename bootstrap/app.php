@@ -46,6 +46,7 @@ $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(Illuminate\Mail\MailServiceProvider::class);
 $app->register(Spatie\Permission\PermissionServiceProvider::class);
+$app->register(App\Providers\FacadeServiceProvider::class);
 
 $app->alias('cache', \Illuminate\Cache\CacheManager::class);
 // aliases for mail

@@ -2,8 +2,27 @@
 
 namespace App\Http\Requests;
 
-class RegisterRequest extends BaseRequest
+use App\Http\Facades\AuthUser;
+use Illuminate\Http\Request;
+
+class UserUpdateRequest extends BaseRequest
 {
+    /**
+     * @var mixed
+     */
+    protected $id;
+
+    /**
+     * UserUpdateRequest constructor.
+     * @param Request $request
+     */
+    public function __construct(Request $request)
+    {
+        $this->id = ($request->instance()->id)
+            ? $request->instance()->id
+            : AuthUser::user()['id'];
+    }
+
     public function rules()
     {
         return [
@@ -15,11 +34,11 @@ class RegisterRequest extends BaseRequest
             'ward_no' => 'required|numeric|min:1|max:30',
             'dob_ad' => 'required|date',
             'dob_bs' => 'required|date',
-            'mobile' => 'required|numeric|digits:10|unique:users',
-            'email' => 'required|email:rfc,dns|unique:users',
-            'password' => 'required|string|confirmed',
+            'mobile' => 'required|numeric|digits:10|unique:users,mobile,' . $this->id,
+            'email' => 'required|email|unique:users,email,' . $this->id,
+            'password' => 'sometimes|string|confirmed',
             'age' => 'required|numeric|min:1|max:125',
-            'blood_group' => 'required|string|in:A+,A-,B+,B-,AB+,AB-,O+,O-',
+            'blood_group' => 'required|string|in:A+,A-,B+,B-,AB+,AB-,O+,O-'
         ];
     }
 
@@ -47,7 +66,6 @@ class RegisterRequest extends BaseRequest
             'email.required' => 'The email is required',
             'email.email' => 'The email must be a valid email address',
             'email.unique' => 'The email has already been taken',
-            'password.required' => 'Password field is required',
             'password.confirmed' => 'Password confirmation didn\'t match',
             'age.required' => 'Age is required',
             'age.numeric' => 'Age must be a number',

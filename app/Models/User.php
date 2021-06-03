@@ -34,12 +34,17 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     /**
      * The attributes excluded from the model's JSON form.
-     *
      * @var array
      */
     protected $hidden = [
         'password',
     ];
+
+    /**
+     * Attribute added to model's JSON form
+     * @var array
+     */
+    protected $appends = ['full_name'];
 
     // guard name
     protected $guard_name = 'api';
@@ -86,7 +91,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function getImgAttribute()
     {
-        return config('app.avatar_path') . $this->attributes['img'];
+        return config('app.get_avatar_image_url') . $this->attributes['img'];
     }
 
     /**
@@ -141,5 +146,17 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function otp()
     {
         return $this->hasOne(Otp::class);
+    }
+
+    /**
+     * Method to delete the token related to the user
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        self::deleting(function ($user) {
+            $user->token()->delete();
+        });
     }
 }

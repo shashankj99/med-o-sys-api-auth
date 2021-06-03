@@ -12,6 +12,8 @@ class CustomException extends \Exception
     {
         $this->message = $message;
         $this->code = $code;
+
+        parent::__construct($message, $code, $previous);
     }
 
     public function getResponse()

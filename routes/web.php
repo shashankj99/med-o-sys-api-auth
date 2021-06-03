@@ -180,4 +180,14 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
             'uses' => 'CityController@destroy'
         ]);
     });
+
+    /* ******************************************
+     * User Routes
+     * ******************************************/
+    $router->get('users', 'UserController@index');
+    $router->get('user', 'UserController@getUserByAccessToken');
+    $router->get('user/{id:[0-9]+}', 'UserController@show');
+    $router->put('user/{id:[0-9]+}', 'UserController@updateUser');
+    $router->put('profile', 'UserController@updateProfile');
+    $router->delete('user/{id:[0-9]+}', 'UserController@deleteUser');
 });

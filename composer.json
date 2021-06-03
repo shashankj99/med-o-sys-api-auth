@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": "^7.3|^8.0",
+        "guzzlehttp/guzzle": "^7.3",
         "illuminate/mail": "^8.35",
         "laravel/lumen-framework": "^8.0",
         "spatie/laravel-permission": "^4.0",

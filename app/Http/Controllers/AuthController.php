@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RegisterRequest;
 use App\Services\AuthService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -52,6 +53,12 @@ class AuthController extends Controller
                 'status' => 422,
                 'errors' => $exception->errors()
             ], 422);
+        } catch (RequestException $exception) {
+            DB::rollBack();
+            return response()->json([
+                'status' => $exception->getCode(),
+                'message' => $exception->getMessage()
+            ], $exception->getCode());
         } catch (\Exception $exception) {
             DB::rollBack();
             return response()->json([

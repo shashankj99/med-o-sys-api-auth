@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Facades\AuthUser;
 use App\Models\Token;
 use Closure;
 use Illuminate\Http\JsonResponse;
@@ -42,8 +43,11 @@ class Authenticate
                 'message' => 'Unauthorized'
             ], 401);
 
-        // add user to the request object
-        $request->user = $token->user;
+        // set access token to the AuthUser facade
+        AuthUser::setAccessToken($token->token);
+
+        // set the user to the AuthUser facade
+        AuthUser::setUser($token->user);
 
         // proceed the request
         return $next($request);
