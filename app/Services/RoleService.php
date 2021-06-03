@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Http\Facades\AuthUser;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\UnauthorizedException;
 use Spatie\Permission\Models\Role;
 
 class RoleService
@@ -30,6 +32,10 @@ class RoleService
      */
     public function getAllRoles($request, $limit = 10)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         $role = $this->role->query();
 
         // check if request has limit value
@@ -49,6 +55,10 @@ class RoleService
      */
     public function createRole($request)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         $this->role->create(['name' => strtolower($request->name)]);
     }
 
@@ -59,6 +69,10 @@ class RoleService
      */
     public function getRole($id)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch role by id
         $role = $this->role->find($id);
 
@@ -76,6 +90,10 @@ class RoleService
      */
     public function updateRole($id, $request)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch the role by id
         $role = $this->role->find($id);
 
@@ -94,6 +112,10 @@ class RoleService
      */
     public function deleteRole($id)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch the role
         $role = $this->role->find($id);
 

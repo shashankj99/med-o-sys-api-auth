@@ -7,6 +7,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\UnauthorizedException;
 use Illuminate\Validation\ValidationException;
 
 class RoleController extends Controller
@@ -34,6 +35,11 @@ class RoleController extends Controller
     {
         try {
             return $this->roleService->getAllRoles($request);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (\Exception $exception) {
             return response()->json([
                 'status' => 500,
@@ -69,6 +75,11 @@ class RoleController extends Controller
                 'status' => 422,
                 'errors' => $exception->errors()
             ], 422);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (\Exception $exception) {
             return response()->json([
                 'status' => 500,
@@ -91,6 +102,11 @@ class RoleController extends Controller
                 'status' => 200,
                 'data' => $role
             ], 200);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 404,
@@ -132,6 +148,11 @@ class RoleController extends Controller
                 'status' => 422,
                 'errors' => $exception->errors()
             ], 422);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 404,
@@ -159,6 +180,11 @@ class RoleController extends Controller
                 'status' => 200,
                 'message' => 'Role deleted successfully'
             ], 200);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 404,

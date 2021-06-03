@@ -6,6 +6,7 @@ use App\Services\AssignRoleAndPermissionService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\UnauthorizedException;
 use Illuminate\Validation\ValidationException;
 
 class AssignRoleAndPermissionController extends Controller
@@ -61,6 +62,11 @@ class AssignRoleAndPermissionController extends Controller
                 'status' => 422,
                 'errors' => $exception->errors()
             ], 422);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 404,
@@ -98,6 +104,11 @@ class AssignRoleAndPermissionController extends Controller
                 'status' => 422,
                 'errors' => $exception->errors()
             ], 422);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 404,
@@ -135,6 +146,11 @@ class AssignRoleAndPermissionController extends Controller
                 'status' => 422,
                 'errors' => $exception->errors()
             ], 422);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 404,

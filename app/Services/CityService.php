@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use App\Http\Facades\AuthUser;
 use App\Models\City;
 use App\Models\District;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
+use Illuminate\Validation\UnauthorizedException;
 
 class CityService
 {
@@ -32,6 +34,10 @@ class CityService
      */
     public function getAllCities($request, $limit=10)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         $city = City::query();
 
         // check if request has limit
@@ -52,6 +58,10 @@ class CityService
      */
     public function createCity($districtId, $request)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch the district by id
         $district = $this->district->find($districtId);
 
@@ -74,6 +84,10 @@ class CityService
      */
     public function getCity($districtId, $cityId)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch the district by id
         $district = $this->district->find($districtId);
 
@@ -99,6 +113,10 @@ class CityService
      */
     public function updateCity($districtId, $cityId, $request)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch the district by id
         $district = $this->district->find($districtId);
 
@@ -127,6 +145,10 @@ class CityService
      */
     public function deleteCity($districtId, $cityId)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch the district by id
         $district = $this->district->find($districtId);
 

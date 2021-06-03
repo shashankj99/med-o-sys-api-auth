@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Http\Facades\AuthUser;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\UnauthorizedException;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -43,6 +45,10 @@ class AssignRoleAndPermissionService
      */
     public function assignPermissionsToRole($request)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch roles by id
         $role = $this->role->find($request->role_id);
 
@@ -63,6 +69,10 @@ class AssignRoleAndPermissionService
      */
     public function assignRolesToPermission($request)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch permission by permission id
         $permission = $this->permission->find($request->permission_id);
 
@@ -82,6 +92,10 @@ class AssignRoleAndPermissionService
      */
     public function assignRolesToUser($request)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch the user by user id
         $user = $this->user->find($request->user_id);
 

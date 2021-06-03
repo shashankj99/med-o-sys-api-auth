@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use App\Http\Facades\AuthUser;
 use App\Models\Province;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
+use Illuminate\Validation\UnauthorizedException;
 
 class ProvinceService
 {
@@ -31,6 +33,10 @@ class ProvinceService
      */
     public function getAllProvinces($request)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         $provinces = $this->province->query();
 
         // check if request has search
@@ -46,6 +52,10 @@ class ProvinceService
      */
     public function createProvince($request)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         $this->province->create([
             'name' => ucfirst($request->name),
             'slug' => Str::slug($request->name),
@@ -60,6 +70,10 @@ class ProvinceService
      */
     public function getProvince($id)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch the province by id
         $province = $this->province->find($id);
 
@@ -77,6 +91,10 @@ class ProvinceService
      */
     public function updateProvince($id, $request)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch province by id
         $province = $this->province->find($id);
 
@@ -98,6 +116,10 @@ class ProvinceService
      */
     public function deleteProvince($id)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch the province by id
         $province = $this->province->find($id);
 

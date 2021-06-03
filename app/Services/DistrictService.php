@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use App\Http\Facades\AuthUser;
 use App\Models\District;
 use App\Models\Province;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
+use Illuminate\Validation\UnauthorizedException;
 
 class DistrictService
 {
@@ -32,6 +34,10 @@ class DistrictService
      */
     public function getAllDistricts($request, $limit=10)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         $districts = District::query();
 
         // check if request has limit
@@ -52,6 +58,10 @@ class DistrictService
      */
     public function createDistrict($provinceId, $request)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch province by id
         $province = $this->province->find($provinceId);
 
@@ -75,6 +85,10 @@ class DistrictService
      */
     public function getDistrict($provinceId, $districtId)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch province by id
         $province = $this->province->find($provinceId);
 
@@ -100,6 +114,10 @@ class DistrictService
      */
     public function updateDistrict($provinceId, $districtId, $request)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch province by id
         $province = $this->province->find($provinceId);
 
@@ -129,6 +147,10 @@ class DistrictService
      */
     public function deleteDistrict($provinceId, $districtId)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch province by id
         $province = $this->province->find($provinceId);
 

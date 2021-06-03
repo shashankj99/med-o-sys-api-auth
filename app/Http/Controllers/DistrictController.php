@@ -7,6 +7,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\UnauthorizedException;
 use Illuminate\Validation\ValidationException;
 
 class DistrictController extends Controller
@@ -34,6 +35,11 @@ class DistrictController extends Controller
     {
         try {
             return $this->districtService->getAllDistricts($request);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (\Exception $exception) {
             return response()->json([
                 'status' => 500,
@@ -70,6 +76,11 @@ class DistrictController extends Controller
                 'status' => 422,
                 'errors' => $exception->errors()
             ], 422);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 404,
@@ -98,6 +109,11 @@ class DistrictController extends Controller
                 'status' => 200,
                 'data' => $district
             ], 200);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 404,
@@ -140,6 +156,11 @@ class DistrictController extends Controller
                 'status' => 422,
                 'errors' => $exception->errors()
             ], 422);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 404,
@@ -168,6 +189,11 @@ class DistrictController extends Controller
                 'status' => 200,
                 'message' => 'District deleted successfully'
             ], 200);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 404,

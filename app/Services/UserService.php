@@ -40,7 +40,7 @@ class UserService
     public function getAllUsers($request, $limit=10, $role='')
     {
         // throw unauthorized exception
-        if (!AuthUser::hasRoles(['super admin', 'admin']))
+        if (!AuthUser::hasRoles(['super admin']))
             throw new UnauthorizedException('Forbidden');
 
         // user query builder
@@ -102,7 +102,7 @@ class UserService
     public function getUserById($id)
     {
         // throw unauthorized exception
-        if (!AuthUser::hasRoles(['super admin', 'admin']))
+        if (!AuthUser::hasRoles(['super admin']))
             throw new UnauthorizedException('Forbidden');
 
         // fetch the user by id
@@ -133,7 +133,7 @@ class UserService
     public function updateUser($id, $request)
     {
         // throw unauthorized exception
-        if (!AuthUser::hasRoles(['super admin', 'admin']))
+        if (!AuthUser::hasRoles(['super admin']))
             throw new UnauthorizedException('Forbidden');
 
         // fetch the user by id
@@ -166,7 +166,7 @@ class UserService
     public function deleteUser($id)
     {
         // throw unauthorized exception
-        if (!AuthUser::hasRoles(['super admin', 'admin']))
+        if (!AuthUser::hasRoles(['super admin']))
             throw new UnauthorizedException('Forbidden');
 
         // fetch the user by id

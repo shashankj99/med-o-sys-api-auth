@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\UnauthorizedException;
 use Illuminate\Validation\ValidationException;
 
 class ProvinceController extends Controller
@@ -34,6 +35,11 @@ class ProvinceController extends Controller
     {
         try {
             return $this->provinceService->getAllProvinces($request);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (\Exception $exception) {
             return response()->json([
                 'status' => 500,
@@ -69,6 +75,11 @@ class ProvinceController extends Controller
                 'status' => 422,
                 'errors' => $exception->errors()
             ], 422);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (\Exception $exception) {
             return response()->json([
                 'status' => 500,
@@ -91,6 +102,11 @@ class ProvinceController extends Controller
                 'status' => 200,
                 'data' => $province
             ], 200);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 404,
@@ -132,6 +148,11 @@ class ProvinceController extends Controller
                 'status' => 422,
                 'errors' => $exception->errors()
             ], 422);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 404,
@@ -164,6 +185,11 @@ class ProvinceController extends Controller
                 'status' => 404,
                 'message' => $exception->getMessage()
             ], 404);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (\Exception $exception) {
             return response()->json([
                 'status' => 500,

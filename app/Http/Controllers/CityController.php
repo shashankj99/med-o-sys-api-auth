@@ -7,6 +7,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\UnauthorizedException;
 use Illuminate\Validation\ValidationException;
 
 class CityController extends Controller
@@ -33,6 +34,11 @@ class CityController extends Controller
     {
         try {
             return $this->cityService->getAllCities($request);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (\Exception $exception) {
             return response()->json([
                 'status' => 500,
@@ -69,6 +75,11 @@ class CityController extends Controller
                 'status' => 422,
                 'errors' => $exception->errors()
             ], 422);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 404,
@@ -97,6 +108,11 @@ class CityController extends Controller
                 'status' => 200,
                 'data' => $city
             ], 200);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 404,
@@ -139,6 +155,11 @@ class CityController extends Controller
                 'status' => 422,
                 'errors' => $exception->errors()
             ], 422);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 404,
@@ -167,6 +188,11 @@ class CityController extends Controller
                 'status' => 200,
                 'message' => 'City deleted successfully'
             ], 200);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
         } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 404,

@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Http\Facades\AuthUser;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\UnauthorizedException;
 use Spatie\Permission\Models\Permission;
 
 class PermissionService
@@ -30,6 +32,10 @@ class PermissionService
      */
     public function getAllPermissions($request, $limit=10)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         $permission = $this->permission->query();
 
         // check if request has limit
@@ -49,6 +55,10 @@ class PermissionService
      */
     public function createPermission($request)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         $this->permission->create(['name' => strtolower($request->name)]);
     }
 
@@ -59,6 +69,10 @@ class PermissionService
      */
     public function getPermission($id)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch the permission by id
         $permission = $this->permission->find($id);
 
@@ -76,6 +90,10 @@ class PermissionService
      */
     public function updatePermission($id, $request)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch the permission by id
         $permission = $this->permission->find($id);
 
@@ -94,6 +112,10 @@ class PermissionService
      */
     public function deletePermission($id)
     {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin']))
+            throw new UnauthorizedException('Forbidden');
+
         // fetch the permission by id
         $permission = $this->permission->find($id);
 
