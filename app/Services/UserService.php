@@ -112,7 +112,11 @@ class UserService
         if (!$user)
             throw new ModelNotFoundException('User with this id doesn\'t exist');
 
-        return $user;
+        return [
+            'user' => $user,
+            'roles' => $user->roles,
+            'hospital'  => $user->hospital_user
+        ];
     }
 
     /**
@@ -121,7 +125,15 @@ class UserService
      */
     public function getUserByAccessToken()
     {
-        return AuthUser::user();
+        $user = AuthUser::user();
+        $roles = AuthUser::roles();
+        $hospitalUsers = $user->hospital_user;
+
+        return [
+            'user'      => $user,
+            'roles'     => $roles,
+            'hospital'  => $hospitalUsers
+        ];
     }
 
     /**
