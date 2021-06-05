@@ -149,6 +149,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
     /**
+     * @return HasOne
+     */
+    public function hospital_user()
+    {
+        return $this->hasOne(HospitalUser::class);
+    }
+
+    /**
      * Method to delete the token related to the user
      */
     public static function boot()

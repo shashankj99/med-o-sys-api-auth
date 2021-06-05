@@ -190,4 +190,18 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->put('user/{id:[0-9]+}', 'UserController@updateUser');
     $router->put('profile', 'UserController@updateProfile');
     $router->delete('user/{id:[0-9]+}', 'UserController@deleteUser');
+
+    /* ******************************************
+     * add hospital to user routes
+     * ******************************************/
+    $router->post('/add/hospital/to/user', 'HospitalUserController@add_hospital_to_user');
+    $router->get('/show/hospital/associated/to/user/{id:[0-9]+}', [
+        'uses' => 'HospitalUserController@show_hospital_associated_to_user'
+    ]);
+    $router->put('/update/hospital/associated/to/user/{id:[0-9]+}', [
+        'uses' => 'HospitalUserController@update_hospital_associated_to_user'
+    ]);
+    $router->delete('/delete/hospital/associated/to/user/{id:[0-9]+}', [
+        'uses' => 'HospitalUserController@delete_hospital_associated_to_user'
+    ]);
 });
