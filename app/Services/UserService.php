@@ -213,6 +213,21 @@ class UserService
     }
 
     /**
+     * Method to return user details with permission check
+     * @param $request
+     * @return array
+     */
+    public function check_user_permission($request)
+    {
+        return [
+            'is_permitted'  => AuthUser::has_permission($request->permission),
+            'user'      => AuthUser::user(),
+            'roles'     => AuthUser::roles(),
+            'hospital'  => AuthUser::user()->hospital_user,
+        ];
+    }
+
+    /**
      * Method to update user
      * @param $user
      * @param $request

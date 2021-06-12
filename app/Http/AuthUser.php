@@ -87,4 +87,23 @@ class AuthUser
         return false;
     }
 
+    /**
+     * Check whether user has permission or not
+     * @param $permission
+     * @return bool
+     */
+    public function has_permission($permission)
+    {
+        $permissions = $this->user->getPermissionsViaRoles()->toArray();
+
+        if (!empty($permissions)) {
+            foreach ($permissions as $_permission) {
+                if ($_permission['name'] == $permission)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
 }

@@ -272,4 +272,36 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Method to get user detail and permission check
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function check_user_permission(Request $request)
+    {
+        try {
+
+            $this->validate($request, [
+                'permission' => 'required'
+            ], ['permission.required' => 'Permission is required']);
+
+            $user = $this->userService->check_user_permission($request);
+
+            return response()->json([
+                'status'    => 200,
+                'data'      => $user
+            ], 200);
+        } catch (ValidationException $exception) {
+            return response()->json([
+                'status'    => 422,
+                'message'   => $exception->errors()
+            ], 422);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'status'    => 500,
+                'message'   => $exception->getMessage()
+            ], 500);
+        }
+    }
 }
