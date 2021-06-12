@@ -190,6 +190,7 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->put('user/{id:[0-9]+}', 'UserController@updateUser');
     $router->put('profile', 'UserController@updateProfile');
     $router->delete('user/{id:[0-9]+}', 'UserController@deleteUser');
+    $router->get('user/serialize', 'UserController@get_serialized_user');
 
     /* ******************************************
      * add hospital to user routes

@@ -228,4 +228,48 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Method to get the user as json serialized
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function get_serialized_user(Request $request)
+    {
+        try {
+            $this->validate($request, [
+                'email' => 'required|email'
+            ], [
+                'email.required' => 'The email address of a user is required',
+                'email.email' => 'The email address must be a valid email'
+            ]);
+
+            $user = $this->userService->get_serialized_user($request);
+
+            return response()->json([
+                'status'    => 200,
+                'data'      => $user
+            ], 200);
+        } catch (ValidationException $exception) {
+            return response()->json([
+                'status'    => 422,
+                'message'   => $exception->errors()
+            ], 422);
+        } catch (UnauthorizedException $exception) {
+            return response()->json([
+                'status'    => 401,
+                'message'   => $exception->getMessage()
+            ], 401);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json([
+                'status'    => 404,
+                'message'   => $exception->getMessage()
+            ], 404);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'status'    => 500,
+                'message'   => $exception->getMessage()
+            ], 500);
+        }
+    }
 }

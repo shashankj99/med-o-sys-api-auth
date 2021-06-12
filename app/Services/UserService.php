@@ -192,6 +192,27 @@ class UserService
     }
 
     /**
+     * Method to get the user as serialized
+     * @param $request
+     * @return string
+     */
+    public function get_serialized_user($request)
+    {
+        // throw unauthorized exception
+        if (!AuthUser::hasRoles(['super admin', 'hospital admin']))
+            throw new UnauthorizedException('Forbidden');
+
+        // fetch user by email address
+        $user = $this->user->where('email', $request->email)
+            ->first();
+
+        if (!$user)
+            throw new ModelNotFoundException('Unable to find the user');
+
+        return $user->toJson();
+    }
+
+    /**
      * Method to update user
      * @param $user
      * @param $request
