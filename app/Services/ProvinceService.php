@@ -33,10 +33,6 @@ class ProvinceService
      */
     public function getAllProvinces($request)
     {
-        // throw unauthorized exception
-        if (!AuthUser::hasRoles(['super admin']))
-            throw new UnauthorizedException('Forbidden');
-
         $provinces = $this->province->query();
 
         // check if request has search

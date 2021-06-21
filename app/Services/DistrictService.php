@@ -34,10 +34,6 @@ class DistrictService
      */
     public function getAllDistricts($request, $limit=10)
     {
-        // throw unauthorized exception
-        if (!AuthUser::hasRoles(['super admin']))
-            throw new UnauthorizedException('Forbidden');
-
         $districts = District::query();
 
         // check if request has limit

@@ -35,11 +35,6 @@ class DistrictController extends Controller
     {
         try {
             return $this->districtService->getAllDistricts($request);
-        } catch (UnauthorizedException $exception) {
-            return response()->json([
-                'status'    => 401,
-                'message'   => $exception->getMessage()
-            ], 401);
         } catch (\Exception $exception) {
             return response()->json([
                 'status' => 500,

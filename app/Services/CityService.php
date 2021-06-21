@@ -34,10 +34,6 @@ class CityService
      */
     public function getAllCities($request, $limit=10)
     {
-        // throw unauthorized exception
-        if (!AuthUser::hasRoles(['super admin']))
-            throw new UnauthorizedException('Forbidden');
-
         $city = City::query();
 
         // check if request has limit

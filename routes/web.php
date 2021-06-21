@@ -46,6 +46,18 @@ $router->post('/password/reset', [
     'uses' => 'AuthController@resetPassword'
 ]);
 
+$router->get('provinces', [
+    'uses' => 'ProvinceController@index'
+]);
+
+$router->get('districts', [
+    'uses' => 'DistrictController@index'
+]);
+
+$router->get('cities', [
+    'uses' => 'CityController@index'
+]);
+
 $router->group(['middleware' => 'auth'], function () use ($router) {
     /* ******************************************
      * Role routes
@@ -111,10 +123,6 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     /* ******************************************
      * Province Routes
      * ******************************************/
-    $router->get('provinces', [
-        'uses' => 'ProvinceController@index'
-    ]);
-
     $router->post('province', [
         'uses' => 'ProvinceController@store'
     ]);
@@ -134,10 +142,6 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     /* ******************************************
      * District Routes
      * ******************************************/
-    $router->get('districts', [
-        'uses' => 'DistrictController@index'
-    ]);
-
     $router->group(['prefix' => 'province/{provinceId:[0-9]+}'], function () use ($router) {
         $router->post('district', [
             'uses' => 'DistrictController@store'
@@ -159,10 +163,6 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     /* ******************************************
      * City Routes
      * ******************************************/
-    $router->get('cities', [
-        'uses' => 'CityController@index'
-    ]);
-
     $router->group(['prefix' => 'district/{districtId:[0-9]+}'], function () use ($router) {
         $router->post('city', [
             'uses' => 'CityController@store'
