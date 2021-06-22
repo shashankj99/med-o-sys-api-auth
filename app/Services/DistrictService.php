@@ -40,6 +40,10 @@ class DistrictService
         if ($request->limit)
             $limit = $request->limit;
 
+        // check if request has province id
+        if ($request->province_id)
+            $districts->where('province_id', $request->province_id);
+
         // check if request has search term
         if ($request->search)
             $districts->where('name', 'LIKE', "%{$request->searcg}%");

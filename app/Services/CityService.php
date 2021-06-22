@@ -40,6 +40,10 @@ class CityService
         if ($request->limit)
             $limit = $request->limit;
 
+        // check if request has district id
+        if ($request->district_id)
+            $city->where('district_id', $request->district_id);
+
         // check if request has search term
         if ($request->search)
             $city->where('name', 'LIKE', "%{$request->search}%");
