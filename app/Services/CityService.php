@@ -70,9 +70,10 @@ class CityService
             throw new ModelNotFoundException('Unable to find the district');
 
         $district->cities()->create([
-            'name' => ucfirst($request->name),
-            'slug' => Str::slug($request->name),
-            'nep_name' => $request->nep_name
+            'name'          => ucfirst($request->name),
+            'slug'          => Str::slug($request->name),
+            'nep_name'      => $request->nep_name,
+            'total_ward_no' => $request->total_ward_no
         ]);
     }
 
@@ -132,9 +133,10 @@ class CityService
             throw new ModelNotFoundException('Unable to find the city');
 
         $city->update([
-            'name' => ucfirst($request->name),
-            'slug' => Str::slug($request->name),
-            'nep_name' => $request->nep_name
+            'name'          => ucfirst($request->name),
+            'slug'          => Str::slug($request->name),
+            'nep_name'      => $request->nep_name,
+            'total_ward_no' => $request->total_ward_no
         ]);
     }
 

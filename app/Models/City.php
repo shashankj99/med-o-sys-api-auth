@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class City extends Model
 {
     protected $fillable = [
-        'district_id', 'name', 'slug', 'nep_name'
+        'district_id', 'name', 'slug', 'nep_name', 'total_ward_no'
     ];
 
     /**

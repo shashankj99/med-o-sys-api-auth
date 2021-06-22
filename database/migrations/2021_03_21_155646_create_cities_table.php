@@ -30,6 +30,9 @@ class CreateCitiesTable extends Migration
                 ->charset('utf8')
                 ->collation('utf8_unicode_ci');
 
+            $table->unsignedInteger('total_ward_no')
+                ->default(0);
+
             $table->timestamps();
         });
     }

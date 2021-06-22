@@ -146,7 +146,7 @@ class AuthService
 
         // check if the entered password is correct or not
         if (!Hash::check($request->password, $user->password))
-            throw new UnauthorizedException('The credentials didn\'t match');
+            throw new UnauthorizedException('Wrong password');
 
         if ($user->token)
             $token = $user->token->token;

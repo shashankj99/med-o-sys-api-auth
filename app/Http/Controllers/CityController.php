@@ -52,8 +52,9 @@ class CityController extends Controller
     {
         try {
             $this->validate($request, [
-                'name' => 'required|unique:cities',
-                'nep_name' => 'required|unique:cities'
+                'name'          => 'required|unique:cities',
+                'nep_name'      => 'required|unique:cities',
+                'total_ward_no' => 'required'
             ], [
                 '*.required' => 'This field is required',
                 '*.unique' => 'This value has already been taken'
@@ -132,8 +133,9 @@ class CityController extends Controller
     {
         try {
             $this->validate($request, [
-                'name' => 'required|unique:cities,name,' . $id,
-                'nep_name' => 'required|unique:cities,nep_name,' . $id
+                'name'          => 'required|unique:cities,name,' . $id,
+                'nep_name'      => 'required|unique:cities,nep_name,' . $id,
+                'total_ward_no' => 'required'
             ], [
                 '*.required' => 'This field is required',
                 '*.unique' => 'This value has already been taken'
