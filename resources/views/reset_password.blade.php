@@ -301,7 +301,7 @@
                 <tr>
                     <th class="column" width="640" style="padding-left: 30px; padding-right: 30px;">
                         <center>
-                            <a href="{{ env('APP_URL') }}">
+                            <a href="{{ env('DASHBOARD_URL') }}">
                                 <img src="#" alt="Header Logo"
                                      width="400">
                             </a>
@@ -348,7 +348,7 @@
                                style="border-radius: 3px;" role="presentation">
                             <tr>
                                 <th class="sans-serif">
-                                    <a href="{{ env('APP_URL') . '/reset/' . $token->token }}"
+                                    <a href="{{ env('DASHBOARD_URL') . '/reset/' . $token->token }}"
                                        style="border: 0 solid #043b86; color: #FFFFFF; display: inline-block; font-size: 14px; font-weight: 400; padding: 15px 50px 15px 50px; text-decoration: none;">Reset your password</a>
                                 </th>
                             </tr>
