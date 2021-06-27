@@ -104,7 +104,7 @@ class AuthService
     {
         // get the verification token
         $verificationToken = VerificationToken::where('token', $request->token)
-            ->andWhere('type', 'activate')
+            ->where('type', 'activate')
             ->first();
 
         // throw not found error
