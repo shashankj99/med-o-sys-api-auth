@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\UnauthorizedException;
 use Illuminate\Validation\ValidationException;
+use Spatie\Permission\Models\Role;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthService
@@ -155,7 +156,28 @@ class AuthService
             $user->token()->create(['token' => $token]);
         }
 
-        return $token;
+        // get user roles
+        $userRoles = $user->getRoleNames()->toArray();
+
+        // if roles exits, get roles
+        if(count($userRoles) > 0) {
+            $roles = $userRoles;
+        } else {
+            // find or create role
+            $role = Role::firstOrCreate(['name' => 'patient']);
+
+            // assign role to the user
+            $user->assignRole($role->name);
+
+            // get role
+            $roles = [$role->name];
+        }
+
+        // credentials array
+        $credentials['access_token'] = $token;
+        $credentials['roles'] = $roles;
+
+        return $credentials;
     }
 
     /**

@@ -157,11 +157,12 @@ class AuthController extends Controller
                 'password' => 'required'
             ], ['*.required' => 'This field is required']);
 
-            $accessToken = $this->authService->login($request);
+            $credentials = $this->authService->login($request);
 
             return response()->json([
                 'status' => 200,
-                'access_token' => $accessToken
+                'access_token' => $credentials['access_token'],
+                'roles' => $credentials['roles']
             ], 200);
         } catch (ValidationException $exception) {
             return response()->json([
