@@ -70,6 +70,9 @@ class UserService
         if ($request->blood_group)
             $users->where('blood_group', $request->blood_group);
 
+        if ($request->gender)
+            $users->where('gedner', $request->gender);
+
         // status filter
         if ($request->status)
             $users->where('status', $request->status);
@@ -269,7 +272,8 @@ class UserService
             'password' => $password,
             'age' => $age,
             'blood_group' => $request->blood_group,
-            'img' => $image
+            'img' => $image,
+            'gender' => $request->gender
         ]);
     }
 }

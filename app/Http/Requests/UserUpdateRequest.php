@@ -38,7 +38,8 @@ class UserUpdateRequest extends BaseRequest
             'email' => 'required|email|unique:users,email,' . $this->id,
             'password' => 'sometimes|string|confirmed',
             'age' => 'required|numeric|min:1|max:125',
-            'blood_group' => 'required|string|in:A+,A-,B+,B-,AB+,AB-,O+,O-'
+            'blood_group' => 'required|string|in:A+,A-,B+,B-,AB+,AB-,O+,O-',
+            'gender' => 'required|in:male,female,others'
         ];
     }
 
@@ -73,6 +74,8 @@ class UserUpdateRequest extends BaseRequest
             'age.max' => 'Age can not be more than 125',
             'blood_group.required' => 'Blood group is required',
             'blood_group.in' => 'Blood group must be of valid type',
+            'gender.required' => 'Gender is required',
+            'gender.in' => 'Gender can only either male or female or others'
         ];
     }
 }

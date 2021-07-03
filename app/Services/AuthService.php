@@ -61,7 +61,8 @@ class AuthService
             'password' => $request->password,
             'age' => $age,
             'blood_group' => $request->blood_group,
-            'img' => $this->getImageName($request->img, $request->mobile)
+            'img' => $this->getImageName($request->img, $request->mobile),
+            'gender' => $request->gender
         ]);
 
         // generate otp if user is created successfully

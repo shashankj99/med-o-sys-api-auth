@@ -21,6 +21,7 @@ class UsersTableSeeder extends Seeder
             'dob_ad'                => '1997/03/31',
             'dob_bs'                => '2053/12/18',
             'age'                   => 24,
+            'gender'                => 'male',
             'blood_group'           => 'A+',
             'mobile'                => 9807060707,
             'email'                 => 'admin@lbtechnology.co',
