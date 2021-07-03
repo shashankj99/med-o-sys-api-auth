@@ -28,11 +28,14 @@ class CreateUsersTable extends Migration
                 ->charset('utf8')
                 ->collation('utf8_unicode_ci');
 
-            $table->string('province');
+            $table->foreignId('province_id')
+                ->constrained();
 
-            $table->string('district');
+            $table->foreignId('district_id')
+                ->constrained();
 
-            $table->string('city');
+            $table->foreignId('city_id')
+                ->constrained();
 
             $table->smallInteger('ward_no');
 
@@ -48,6 +51,8 @@ class CreateUsersTable extends Migration
 
             $table->tinyInteger('age')
                 ->unsigned();
+
+            $table->enum('gender', ['male', 'female', 'others']);
 
             $table->enum('blood_group', ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']);
 

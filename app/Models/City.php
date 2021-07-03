@@ -11,6 +11,11 @@ class City extends Model
         'district_id', 'name', 'slug', 'nep_name', 'total_ward_no'
     ];
 
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
     /**
      * @return BelongsTo
      */

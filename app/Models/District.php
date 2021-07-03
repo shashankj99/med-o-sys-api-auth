@@ -12,6 +12,11 @@ class District extends Model
         'province_id', 'name', 'slug', 'nep_name'
     ];
 
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
     /**
      * @return BelongsTo
      */

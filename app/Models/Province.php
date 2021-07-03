@@ -9,6 +9,11 @@ class Province extends Model
 {
     protected $fillable = ['name', 'slug', 'nep_name'];
 
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
     /**
      * @return HasMany
      */

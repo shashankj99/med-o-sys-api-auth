@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\City;
+use App\Models\District;
 use App\Models\Province;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -65,6 +67,25 @@ class ProvincesTableSeeder extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ],
+        ]);
+
+        District::insert([
+            [
+                'province_id' => 1,
+                'name' => 'Morang',
+                'slug' => 'morang',
+                'nep_name' => 'मोरङ'
+            ]
+        ]);
+
+        City::insert([
+            [
+                'district_id' => 1,
+                'name' => 'Biratnagar',
+                'slug' => 'biratnagar',
+                'nep_name' => 'विराटनगर',
+                'total_ward_no' => 19
+            ]
         ]);
     }
 }

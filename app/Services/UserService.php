@@ -55,16 +55,16 @@ class UserService
         }
 
         // province filter
-        if ($request->province)
-            $users->where('province', $request->province);
+        if ($request->province_id)
+            $users->where('province_id', $request->province_id);
 
         // district filter
-        if ($request->district)
-            $users->where('district', $request->district);
+        if ($request->district_id)
+            $users->where('district_id', $request->district_id);
 
         // city filter
-        if ($request->city)
-            $users->where('city', $request->city);
+        if ($request->city_id)
+            $users->where('city_id', $request->city_id);
 
         // blood group filter
         if ($request->blood_group)
@@ -261,9 +261,9 @@ class UserService
             'middle_name' => $request->middle_name,
             'last_name' => $request->last_name,
             'nep_name' => $request->nep_name,
-            'province' => $request->province,
-            'district' => $request->district,
-            'city' => $request->city,
+            'province_id' => $request->province,
+            'district_id' => $request->district,
+            'city_id' => $request->city,
             'ward_no' => $request->ward_no,
             'dob_ad' => $request->dob_ad,
             'dob_bs' => $request->dob_bs,

@@ -27,7 +27,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'first_name', 'middle_name', 'last_name', 'nep_name', 'province', 'district', 'city', 'ward_no', 'dob_ad',
+        'first_name', 'middle_name', 'last_name', 'nep_name', 'province_id', 'district_id', 'city_id', 'ward_no', 'dob_ad',
         'dob_bs', 'mobile', 'email', 'password', 'age', 'blood_group', 'img', 'mobile_verification', 'email_verification',
         'status', 'gender'
     ];
@@ -154,6 +154,21 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function hospital_user()
     {
         return $this->hasOne(HospitalUser::class);
+    }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 
     /**
