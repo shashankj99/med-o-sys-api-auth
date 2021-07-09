@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\CustomException;
 use App\Http\Requests\RegisterRequest;
 use App\Services\AuthService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -218,6 +219,49 @@ class AuthController extends Controller
                 'status' => 422,
                 'errors' => $exception->errors()
             ], 422);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json([
+                'status' => 404,
+                'message' => $exception->getMessage()
+            ], 404);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'status' => 500,
+                'message' => $exception->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Method to check whether user verified or not before resetting password
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function checkResetPasswordVerification(Request $request)
+    {
+        try {
+            $this->validate($request, [
+                'username' => 'required'
+            ], [
+                'username.required' => 'Couldn\'t find username in request'
+            ]);
+
+            $checkResetPasswordVerification = $this->authService->checkResetPasswordVerification($request);
+
+            assert($checkResetPasswordVerification);
+
+            return response()->json([
+                'status'  => 200,
+                'message' => 'success'
+            ], 200);
+
+        } catch(ValidationException $exception) {
+            return response()->json([
+                'status' => 422,
+                'errors' => $exception->errors()
+            ], 422);
+        } catch (CustomException $exception) {
+            return $exception->getResponse();
         } catch (ModelNotFoundException $exception) {
             return response()->json([
                 'status' => 404,

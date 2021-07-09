@@ -42,6 +42,10 @@ $router->post('email/reset', [
     'uses' => 'AuthController@resetPasswordViaEmail'
 ]);
 
+$router->post('check/reset/password/verification', [
+    'uses' => 'AuthController@checkResetPasswordVerification'
+]);
+
 $router->post('/password/reset', [
     'uses' => 'AuthController@resetPassword'
 ]);

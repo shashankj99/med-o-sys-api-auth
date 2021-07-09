@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\CustomException;
 use App\Jobs\ResetPasswordJob;
 use App\Jobs\SendActivationMailJob;
 use App\Models\Otp;
@@ -203,6 +204,34 @@ class AuthService
             $this->createVerificationToken($user, 'reset');
             dispatch(new ResetPasswordJob($user));
         }
+    }
+
+    /**
+     * Method to check whether user verified or not before resetting password
+     * @param $request
+     */
+    public function checkResetPasswordVerification($request)
+    {
+        $user = $this->user
+            ->with(['otp' => function($otp) {
+                $otp->select('user_id','otp')
+                    ->where('type', '=', 'reset');
+            }, 'verificationToken' => function($verificationToken) {
+                $verificationToken->select('user_id', 'token')
+                    ->where('type', '=', 'reset');
+            }])
+            ->select('id')
+            ->where('mobile', $request->username)
+            ->orWhere('email', $request->username)
+            ->first();
+
+        if ($user->otp || $user->verificationToken)
+            throw new CustomException('User has not been verified yet', 403);
+
+        if (!$user)
+            throw new ModelNotFoundException('Unable to find the user');
+        
+        return true;
     }
 
     /**
