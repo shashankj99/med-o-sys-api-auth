@@ -207,12 +207,13 @@ class UserService
 
         // fetch user by email address
         $user = $this->user->where('email', $request->email)
+            ->select("id", "email", "mobile", "first_name", "last_name", "middle_name")
             ->first();
 
         if (!$user)
             throw new ModelNotFoundException('Unable to find the user');
 
-        return $user->toJson();
+        return $user;
     }
 
     /**
