@@ -163,7 +163,8 @@ class AuthController extends Controller
             return response()->json([
                 'status' => 200,
                 'access_token' => $credentials['access_token'],
-                'roles' => $credentials['roles']
+                'roles' => $credentials['roles'],
+                'profile_image' => $credentials["profile_image"]
             ], 200);
         } catch (ValidationException $exception) {
             return response()->json([
