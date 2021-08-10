@@ -178,6 +178,7 @@ class AuthService
         // credentials array
         $credentials['access_token'] = $token;
         $credentials['roles'] = $roles;
+        $credentials['profile_image'] = $user->img;
 
         return $credentials;
     }
