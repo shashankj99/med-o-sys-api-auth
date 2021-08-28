@@ -192,4 +192,41 @@ class ProvinceController extends Controller
             ], 500);
         }
     }
+
+    public function getLocationInfo(Request $request)
+    {
+        try {
+            // validate request
+            $this->validate($request, [
+                "province_id" => "required",
+                "district_id" => "required",
+                "city_id" => "required"
+            ], [
+                "*.required" => "This field is required"
+            ]);
+
+            // get location info from service
+            $location = $this->provinceService->getLocationInfo($request);
+
+            return response()->json([
+                "status" => 200,
+                "data" => $location
+            ], 200);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json([
+                'status' => 404,
+                'message' => $exception->getMessage()
+            ], 404);
+        } catch (ValidationException $exception) {
+            return response()->json([
+                'status' => 422,
+                'errors' => $exception->errors()
+            ], 422);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'status' => 500,
+                'message' => $exception->getMessage()
+            ], 500);
+        }
+    }
 }

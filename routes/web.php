@@ -62,6 +62,8 @@ $router->get('cities', [
     'uses' => 'CityController@index'
 ]);
 
+$router->get('get/address', 'ProvinceController@getLocationInfo');
+
 $router->group(['middleware' => 'auth'], function () use ($router) {
     /* ******************************************
      * Role routes

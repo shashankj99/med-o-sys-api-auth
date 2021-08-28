@@ -125,4 +125,42 @@ class ProvinceService
 
         $province->delete();
     }
+
+    /**
+     * @description Method to get location info
+     * @param $request
+     * @return array
+     */
+    public function getLocationInfo($request)
+    {
+        // get province, district and city name
+        $location = $this->province
+            ->select('id', 'name', 'nep_name')
+            ->with('districts.cities')
+            ->whereHas('districts', function ($query) use ($request) {
+                $query
+                    ->select(['id', 'province_id', 'name', 'nep_name'])
+                    ->whereHas('cities', function ($q) use ($request) {
+                        $q
+                        ->select(['id', 'district_id', 'name', 'nep_name'])
+                        ->where('id', '=', $request->city_id);
+                    })
+                    ->where('id', '=', $request->district_id);
+            })
+            ->find($request->province_id);
+        
+        // throw not found exception 
+        if (!$location)
+            throw new ModelNotFoundException("Unable to find the location information");
+        
+        // district and city model
+        $district = $location->districts[0];
+        $city = $location->districts[0]->cities[0];
+
+        return [
+            'province' => "$location->name, ($location->nep_name)",
+            'district' => "$district->name, ($district->nep_name)",
+            'city'     => "$city->name, ($city->nep_name)"
+        ];
+    }
 }
